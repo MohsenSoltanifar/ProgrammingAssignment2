@@ -7,17 +7,17 @@
 
 
 makeCacheMatrix <- function(x = matrix()) {
-  d <- NULL
+  inv <- NULL
   set <- function(y) {
     x <<- y
-    d <<- NULL
+    inv <<- NULL
   }
   get <- function() x
-  setdet <- function(det) d <<- det
-  getdet <- function() d
+  setinverso <- function(inverso) inv <<- inverso
+  getinverso <- function() inv
   list(set = set, get = get,
-       setdet = setdet,
-       getdet = getdet)
+       setinverso = setinverso,
+       getinverso = getinverso)
 }
 
 
@@ -29,15 +29,15 @@ makeCacheMatrix <- function(x = matrix()) {
 #then the cachesolve should retrieve the inverse from the cache.
 
 cacheSolve <- function(x, ...) {
-  d <- x$getdet()
-  if(!is.null(d)) {
-    message("getting cached determinant")
-    return(d)
+  inv <- x$getinverso()
+  if(!is.null(inv)) {
+    message("getting cached inversed matrix")
+    return(inv)
   }
   matrixdata <- x$get()
-  d <- solve(matrixdata, ...)
-  x$setdet(d)
-  d
+  inv <- solve(matrixdata, ...)
+  x$setinverso(inv)
+  inv
 }
 
 
